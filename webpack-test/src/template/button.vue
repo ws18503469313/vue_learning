@@ -19,7 +19,7 @@
         },
         methods: {
             handleClick(e){
-                console.log('button component event')
+                // console.log('button component event')
                 this.$emit("click", e)//调用父组件的方法
             }
         }

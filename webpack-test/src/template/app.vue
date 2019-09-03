@@ -1,5 +1,6 @@
 <template>
     <div>
+        <router-view></router-view>
         <div>Hello{{name}}</div>
         <div>
             <v-title title="Vue组件化" ></v-title>
@@ -26,7 +27,7 @@
         },
         methods: {
             handleClick(e){
-                console.log('parent component event')
+                // console.log('parent component event')
                 console.log(e)
             }
         }
