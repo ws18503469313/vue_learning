@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取DOM元素</title>
+    <script src="../lib/vue.min.js" ></script>
+    <script src="../lib/vue-resource.min.js" ></script>
+    <script src="../lib/vue-router.js" ></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <!--    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+</head>
+<body>
+
+    <div id = "app">
+
+        <input type="button" value="获取元素" @click="getdom">
+
+        <h3 ref="myh3">而3未v第三个v</h3>
+
+        <login ref="mylogin"></login>
+
+    </div>
+    <script>
+        var login = {
+            template: "<h1>登陆组件</h1>",
+            data(){
+                return {user: "polunzi"}
+            },
+            methods: {
+                show(){
+                    console.log("调用了子组件的show()")
+                }
+            }
+        }
+        var  vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods:{
+                getdom(){
+                    console.log(this.$refs.mylogin.innerHTML)
+                    console.log(this.$refs.mylogin.user)
+                    this.$refs.mylogin.show()
+                }
+            },
+            components: {
+                login
+            }
+        })
+    </script>
+</body>
+</html>

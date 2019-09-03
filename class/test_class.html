@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>样式</title>
+
+    <style>
+        .red{
+            color: red;
+        }
+        .thin{
+            font-weight: lighter;
+        }
+    </style>
+    <script src="../lib/vue.min.js" ></script>
+</head>
+<body>
+    <div id = "app">
+        <!--<h1 class="red thin">很大的h1,大大大大大大</h1>-->
+        <h1 :class="['red', flag ? 'thin' : '']">很大的h1,大大大大大大</h1>
+        <h1 :class="{red: true, thin:true}">很大的h1,大大大大大大</h1>
+        <h1 :class="classobj">很大的h1,大大大大大大</h1>
+
+        <h1 :style = "{color: 'red'}">很大的h1,大大大大大大</h1>
+
+        <h1 :style = "styleobj">很大的h1,大大大大大大</h1>
+        <p>{{message}}</p>
+    </div>
+
+
+
+<!--    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+
+    <script>
+        var  vm = new Vue({
+            el: "#app",
+            data: {
+                message: 'Hello Vue!',
+                flag: true,
+                classobj: {red: true, thin:true},
+                styleobj: {color: 'red', 'font-size': '20px'}
+            }
+        })
+    </script>
+</body>
+</html>

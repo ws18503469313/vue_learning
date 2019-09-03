@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件</title>
+    <script src="../lib/vue.js" ></script>
+    <script src="../lib/vue-resource.min.js" ></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <!--    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+</head>
+<body>
+
+    <div id = "app">
+        <com-h3></com-h3>
+        <com></com>
+        <login></login>
+        <register></register>
+    </div>
+    <template id="tmpl">
+        <div>
+            <span>content</span>
+        </div>
+    </template>
+    <template id="reg">
+        <div>
+            <span>sdadwadawdaw</span>
+        </div>
+    </template>
+    <script>
+
+        /**
+         * 引入组件, template 只能有一个 root 元素
+         */
+        Vue.component('com-h3', {template : '<h3>这是使用Vue.extend创建的组件</h3>'});
+        Vue.component('com', {template : '#tmpl'});
+        var  vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods:{
+
+            },
+            components: {
+                login:{
+                    template: '<h4>h4444444444</h4>'
+                },
+                register: {
+                    template: '#reg',
+                    data: function () {
+                        return {}//内部数据必须为一个 fun 而且函数必须返回一个对象
+                    }
+                }
+            },
+            created(){
+
+            }
+        })
+    </script>
+</body>
+</html>

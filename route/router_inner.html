@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由嵌套</title>
+    <script src="../lib/vue.min.js" ></script>
+    <script src="../lib/vue-resource.min.js" ></script>
+    <script src="../lib/vue-router.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+</head>
+<body>
+
+    <div id = "app">
+        <router-link to="/account" >account</router-link>
+        <router-view></router-view>
+
+    </div>
+    <template id="tmpl">
+        <div>
+            <h1>这是account</h1>
+        </div>
+    </template>
+    <script>
+        const account = {
+            template: "#tmpl"
+        }
+
+        const router = new VueRouter({
+            routes: [
+                {path: "/account", component: account}
+            ]
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods:{
+
+            },
+            router
+        })
+
+    </script>
+</body>
+</html>

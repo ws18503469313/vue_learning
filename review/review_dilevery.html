@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件传值复习</title>
+    <script src="../lib/vue.min.js" ></script>
+    <script src="../lib/vue-resource.min.js" ></script>
+    <script src="../lib/vue-router.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+</head>
+<body>
+
+    <div id = "app">
+        <com1 v-bind:message = "msg" @parentfunc = "getchildMessage"></com1>
+
+
+    </div>
+    <template id="tmpl">
+        <div>
+            <h1>这是子元素---{{message}}</h1>
+            <input type="button" value="传递" @click="dilever">
+        </div>
+    </template>
+    <script>
+
+        const com1 = {
+            template: '#tmpl',
+            data(){
+                return {
+                    msg: "this is a message from child"
+                }
+            },
+            props: ['message'],
+            methods: {
+                dilever(){
+                    this.$emit("parentfunc", this.msg)
+                }
+            }
+        }
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "this is a msg from parnet",
+                childmessage : ""
+            },
+            methods:{
+                getchildMessage(data){
+                    this.childmessage = data
+                    console.log(this.childmessage)
+                }
+            },
+            components:{
+                com1
+            }
+        })
+
+    </script>
+</body>
+</html>

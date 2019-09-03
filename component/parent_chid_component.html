@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件</title>
+    <script src="../lib/vue.min.js" ></script>
+    <script src="../lib/vue-resource.min.js" ></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <!--    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+</head>
+<body>
+
+    <div id = "app">
+
+        <parent v-bind:parentmsg = "msg" @func123 = "show"></parent>
+
+    </div>
+    <script>
+        var  vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "parent_msg",
+                categray: null
+
+            },
+            methods:{
+                show(data){
+                    console.log("parnet_method")
+                    this.categray = data
+                    console.log(this.categray)
+                }
+            },
+            components:{
+                parent: {
+                    data(){
+                      return {
+                          childata:{title: '123', content: 'qqq'}
+                      }
+                    },
+                    template: '<div>' +
+                                    '<h3 @click = "change">child {{parentmsg}}</h3>' +
+                                    '<input type="button" value="子组件的button" @click="childmethod">'+
+                                '</div>',
+                    props: ['parentmsg'],
+                    directives: {},
+                    filter: {},
+                    components: {},
+                    methods: {
+                        change(){
+                            this.parentmsg = "修改"
+                        },
+                        childmethod(){
+                            //#emit 是触发绑定的函数,  可以向绑定的函数传值,
+                            this.$emit('func123',this.childata)
+                        }
+                    }
+
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for</title>
+
+    <script src="../lib/vue.min.js" ></script>
+</head>
+<body>
+    <div id = "app" >
+
+        <p v-for = " (item, i) in list" >索引:{{i}}-----值:{{item}}</p>
+
+        <ul>
+
+            <li v-for = "(user,i) in users">{{user.id}}----{{user.name}}------{{i}}</li>
+        </ul>
+        <!-- foreach in object: value -- key --index  -->
+
+        <table>
+            <thead >
+                <tr >
+                    <th><input type="checkbox" /></th>
+                    <th v-for = "(v, k, i) in classes[1]">{{k}}</th>
+                </tr>
+            </thead>
+            <tbody>
+            <!-- v-for 循环的时候, key的绑定必须是 数字/字符串, 不能是对象 -->
+                <tr v-for = "(one, index) in classes" :key= "one.id">
+                    <td><input type="checkbox" /></td>
+                    <td>{{one.id}} </td>
+                    <td>{{one.name}} </td>
+                    <td>{{one.level}} </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <form>
+                <label> ID:<input v-model="id" type="text"></label>
+                <label> name:<input v-model="name" type="text"></label>
+                <label> level:<input v-model="level" type="text"></label>
+                <input type="button" value="添加" @click ="add">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var  vm = new Vue({
+            el: "#app",
+            data: {
+                id: "",
+                name: "",
+                level: "",
+                list:[1, 2, 3, 4, 5],
+                 users:[
+                     {id:1, name:"adw"},
+                     {id:52, name:"adadww"},
+                     {id:11, name:"aaddw"},
+                     {id:15, name:"ad232w"}
+                 ],
+                classA:{
+                    id: 1,
+                    name: 324,
+                    level: '高三'
+                },
+                classes: [
+                    {
+                        id: 1,
+                        name: 324,
+                        level: '高三'
+                    },
+                    {
+                        id: 2,
+                        name: 324,
+                        level: '高三1'
+                    },
+                    {
+                        id: 3,
+                        name: 324,
+                        level: '高三2'
+                    }
+                ]
+            },methods: {
+                add(){
+                    this.classes.unshift({id: this.id, name: this.name, level:this.name});
+                    this.id = ""
+                    this.name = ""
+                    this.level = ""
+
+                }
+            }
+        })
+    </script>
+</body>
+</html>

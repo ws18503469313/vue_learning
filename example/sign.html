@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.min.js" ></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <!--    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+</head>
+<body>
+
+    <div id = "app">
+        <div class = "panel panel-primary">
+            <div class = "page-header">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>ID: <input type="text" class="form-control" v-model = "id"></label>
+
+                <label>Name: <input type="text" class="form-control" v-model = "name" @keyup.enter = "add"></label>
+                <input type="button" value="添加" class="btn btn-primary" @click = "add">
+                <label>搜索:<input type="text" v-model = "keyword" v-focus v-color = "'red'" v-fontsize = "25"></label>
+            </div>
+        </div>
+        <table class = "table table-bordered table-hover table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Ctine</th>
+                <th>Operation</th>
+            </tr>
+            <tr v-for = "(item, i) in search(keyword)" key = "item.id">
+                <td >{{item.id}}</td>
+                <td >{{item.name}}</td>
+                <td >{{item.ctime | dateFormat}}</td>
+                <td><a @click = "del(item.id)">删除</a></td>
+            </tr>
+        </table>
+
+    </div>
+    <script>
+        /**
+         * 过滤器的基本使用
+         */
+        Vue.filter("dateFormat", function (date) {
+            var dt = new Date(date);
+
+            var year = dt.getFullYear();
+            var month = (dt.getMonth() + 1 ).toString().padStart(2, "0");
+            var day = dt.getDate().toString().padStart(2, "0");
+            var hour = dt.getHours().toString().padStart(2, "0");
+            var minte = dt.getMinutes().toString().padStart(2, "0");
+            var second = dt.getSeconds().toString().padStart(2, "0");
+            return year + "-" + month + "-" + day + " " + hour + ":" + minte + ":" + second
+        })
+        /**
+         * 自定义指令
+         */
+        Vue.directive("focus", {
+            bind: function (el) {
+                //指令绑定到dom的时候,执行, 和 css有关的函数,建议在bind中执行
+
+            },
+            inserted: function (el) {
+                //当元素插入dom中的时候, 会执行一次,  和js行为有关的函数,建议在inserted中执行
+                el.focus()
+            },
+            updated: function (el) {
+
+            }
+        })
+        Vue.directive("color", {
+            bind: function (el, bindcolor) {
+                el.style.color = bindcolor.value
+            },
+            inserted: function (el) {
+                el.focus()
+            },
+            updated: function (el) {
+
+            }
+        })
+        var  vm = new Vue({
+            el: "#app",
+            data: {
+                id: "",
+                name: "",
+                keyword: "",
+                list:[
+                    {id: 1, name: "奔驰", ctime: new Date()},
+                    {id: 2, name: "宝马", ctime: new Date()}
+                ]
+            },
+            methods:{
+                add(){
+                    this.list.push({id: this.id, name: this.name, ctime: new Date()})
+                    this.id = this.name = ""
+                },
+                del(id){
+                    //  方法一:
+                    // for (var i in this.list){
+                    //     if(this.list[i].id == id ){
+                    //         //从第 i 个开始, 删除 1 个
+                    //         this.list.splice(i, 1)
+                    //     }
+                    // }
+                    //  方法二:
+                    var index = this.list.findIndex(item =>{
+                        if(item.id == id){
+                            return true;
+                        }
+                    })
+                    this.list.splice(index, 1)
+
+                },
+                search(keyword){
+                    var newList = []
+                    this.list.forEach(item =>{
+                        if(item.name.indexOf(keyword) != -1){
+                        //方法二: if(item.name.includes(keyword)
+                            newList.push(item)
+                        }
+                    })
+                    return newList
+                }
+            },
+            filters:{
+                //过滤器调用的时候,使用就近原则.
+            },
+            directives: {
+                fontsize: function (el, bindFontSize) { //function 等同于 把代码写到了bind和update中
+                    el.style.fontSize = parseInt(bindFontSize.value) + "px"
+                }
+            },
+            beforeCreate(){
+                console.log(12313)
+            }
+
+        })
+
+    </script>
+</body>
+</html>

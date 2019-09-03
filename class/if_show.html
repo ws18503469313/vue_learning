@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.min.js" ></script>
+    <!--    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+</head>
+<body>
+
+    <div id = "app">
+
+        <input type="button" @click = "toggle" value="button">
+
+        <input type="button" @click = "flag = !flag" value="flag = !flag">
+        <!--  show 会每次删除dom, 而 if 只是添加了 隐藏的class-->
+        <h3 v-if = 'flag'>v-if 元素</h3>
+        <h3 v-show = 'flag'>v-if 元素</h3>
+
+    </div>
+    <script>
+        var  vm = new Vue({
+            el: "#app",
+            data: {
+                flag: true
+            },
+            methods:{
+                toggle(){
+                    this.flag = !this.flag
+                }
+
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>categray_list</title>
+    <script src="../lib/vue.min.js" ></script>
+    <script src="../lib/vue-resource.min.js" ></script>
+    <script src="../lib/cookies.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <!--    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+</head>
+<body>
+
+    <div id = "app">
+        <input type="button" value="checkcookie" @click="checkcookie">
+        <input type="button" value="getcookie" @click="getcookie">
+        <input type="button" value="setcookie" @click="setcookie">
+        <div class="panel panel-primary">
+        	  <div class="panel-heading">
+        			<h3 class="panel-title">添加品牌</h3>
+        	  </div>
+        	  <div class="panel-body form-inline">
+                  <label>name:<input type="text" v-model="name"></label>
+                  <input type="button" value="添加" @click="add">
+        	  </div>
+        </div>
+        <table class="table table-bordered table-hover table-striped">
+        	<thead>
+        		<tr>
+        			<th>Id</th>
+                    <th>name</th>
+                    <th>ctime</th>
+                    <th>operation</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		<tr v-for = "(item, i) in list" :key="item.id" >
+        			<td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.createTime}}</td>
+                    <td><a @click.prevent = "del(item.id)">删除</a></td>
+        		</tr>
+        	</tbody>
+        </table>
+
+    </div>
+    <script>
+        var  vm = new Vue({
+            el: "#app",
+            data: {
+                name:"",
+                list:[
+                    {id: 1, name: "aodi", createTime: new Date()},
+                    {id: 2, name: "benchi", createTime: new  Date()}
+                ]
+
+            },
+            created(){//vm 实例的 data 和 method 初始化完毕后, vm实例会自动执行create 这个生命周期函数
+                this.getallList()
+            },
+            methods:{
+                getallList(){
+                    this.$http.get("http://localhost/categray/list").then(function (result) {
+                        if(result.status == 200){
+                            this.list = result.body.data
+                        }else{
+                            alert(result.body.message)
+                        }
+
+
+                    })
+                },
+                add(){
+                    this.$http.post("http://localhost/categray/save",  {name: this.name},{emulateJSON: true}).then(function (result) {
+                        // alert(result.body.msg)
+                        console.log(result)
+                        alert(result.body.msg)
+                        if(result.body.status == 200){
+                           this.getallList()
+                        }
+                    }, function (result) {
+                        console.log(result)
+                        alert(result.body.message)
+                    })
+                },
+                del(id){
+                    this.$http.get("http://localhost/categray/delete?id="+id).then(function (result) {
+                        alert(result.body.msg)
+                        if(result.body.status == 200){
+                            this.getallList()
+                            // var index = this.list.findIndex(item =>{
+                            //     if(item.id == id){
+                            //         return true;
+                            //     }
+                            // })
+                            // this.list.splice(index, 1)
+                        }
+                    },function (result) {
+                        alert(result.body.msg)
+                    })
+
+                },
+                checkcookie(){
+                    checkCookie()
+                },
+                getcookie(){
+                    console.log(getCookie("username"))
+                },
+                setcookie(){
+
+                }
+
+            }
+
+        })
+    </script>
+</body>
+</html>
