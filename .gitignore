@@ -4,6 +4,8 @@
 *.iml
 *.ipr
 node_modules
+
+*/dist/*
 webpack-test/node_modules
 /webpack-test/node_modules
 
