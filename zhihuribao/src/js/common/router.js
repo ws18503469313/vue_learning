@@ -6,38 +6,38 @@ Vue.use(VueRouter)
 const Routers = [
     {
         path: '/index',
-        component: (resolve) => require(['../template/views/index.vue'], resolve),//一次性加载
+        component: (resolve) => require(['../../template/views/index.vue'], resolve),//一次性加载
         meta: {//自定义一些属性
             title: "首页"
         }
     },{
         path: '/about',
-        component: (resolve) => require(['../template/views/about.vue'], resolve),//懒加载
+        component: (resolve) => require(['../../template/views/about.vue'], resolve),//懒加载
         meta: {
             title: "关于"
         }
     },{
         path: '/user/:id',
-        component: (resolve) => require(['../template/views/user.vue'], resolve),
+        component: (resolve) => require(['../../template/views/user.vue'], resolve),
         meta: {
             title: "个人主页"
         }
     },{
         path: '/login',
-        component: (resolve) => require(['../template/views/login.vue'], resolve),
+        component: (resolve) => require(['../../template/views/login.vue'], resolve),
         meta: {
             title: "登陆"
         }
     },{
         path: '/message',
-        component: (resolve) => require(['../template/views/message.vue'], resolve),
+        component: (resolve) => require(['../../template/views/message.vue'], resolve),
         meta: {
             title: "消息"
         }
-    },{
+    }/*,{
         path: '*',
         redirect: "/index"
-    }
+    }*/
 ]
 const RouterConfig = {
     mode: 'history',
